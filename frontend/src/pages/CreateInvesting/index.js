@@ -7,13 +7,35 @@ import {
   Menu,
   Input,
   InputNumber,
-  Select,
+  Select
 } from "antd";
+import "antd/dist/antd.css"
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import InvestingService from "../../services/InvestingService";
+import CategoryService from "../../services/CategoryService";
 
 const { Header, Content, Footer } = Layout;
+const { Option } = Select;
 
 function CreateInvesting() {
+
+  const[categories, setCategories] = useState([])
+  const[, setCategory] = useState(null)
+
+  useEffect(() =>{
+    refreshCategory()
+    return () => {}
+  },[])
+
+  async function refreshCategory() {
+    CategoryService.retrieveAllCategories()
+      .then(
+        response => {
+          setCategories(response.data)
+        }
+      )
+  }
 
   const layout = {
     labelCol: {
@@ -31,12 +53,17 @@ function CreateInvesting() {
   };
 
   const onFinish = (values) => {
+    InvestingService.saveIvesting(values)
     message.success("Investimento salvo!")
   }
 
-  const onFinishFailed = (erroInfo) => {
+  const onFinishFailed = (errorInfo) => {
     message.danger("Investimento salvo!")
-    console.log("FAILED:", erroInfo)
+    console.log("FAILED:", errorInfo)
+  }
+
+  function handleChange(value) {
+    setCategory(value)
   }
 
   return (
@@ -44,7 +71,7 @@ function CreateInvesting() {
       <Layout className="layout">
         <Header>
           <div className="logo" />
-          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={["2"]}>
+          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
             <Menu.Item key="1">
               <Link to="/cadastrar-investimento">Cadastrar Investimento</Link>
             </Menu.Item>
@@ -67,7 +94,7 @@ function CreateInvesting() {
             >
               <Form.Item
                 label="Código do Ativo"
-                name="codigoAtivo"
+                name="assetCode"
                 rules={[
                   {
                     required: true,
@@ -79,7 +106,7 @@ function CreateInvesting() {
               </Form.Item>
               <Form.Item
                 label="Valor"
-                name="valorCota"
+                name="value"
                 rules={[
                   {
                     required: true,
@@ -87,11 +114,11 @@ function CreateInvesting() {
                   },
                 ]}
               >
-                <Input />
+                <InputNumber />
               </Form.Item>
               <Form.Item
                 label="Quantidade de Cotas"
-                name="quantidadeCotas"
+                name="amount"
                 rules={[
                   {
                     required: true,
@@ -103,7 +130,7 @@ function CreateInvesting() {
               </Form.Item>
               <Form.Item
                 label="Data da compra"
-                name="dataCompra"
+                name="buyedAt"
                 rules={[
                   {
                     required: true,
@@ -113,18 +140,17 @@ function CreateInvesting() {
               >
                 <DatePicker />
               </Form.Item>
-              <Form.Item label="Categoria" name="categoria">
-                {/* <Select onChange={handleChange}>
-                  {categorias.map((item, index) => {
+              <Form.Item label="Categoria" name="category">
+                <Select onChange={handleChange}>
+                  {categories.map((item, index) => {
                     return (
                       <Option key={item.id} value={item.id}>
-                        {item.nome}
+                        {item.name}
                       </Option>
                     );
                   })}
-                </Select> */}
+                </Select>
               </Form.Item>
-
               <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
                   Salvar

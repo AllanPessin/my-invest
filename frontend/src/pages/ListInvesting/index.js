@@ -1,16 +1,32 @@
 import { Button, Layout, Menu, message, Table } from "antd"
 import "antd/dist/antd.css"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
+import InvestingService from "../../services/InvestingService"
 
 const { Header, Content, Footer } = Layout
 const { Column } = Table
 
 function ListInvesting() {
 
-  // const[investig, setinvestig] = useState([])
+  const[investig, setInvestig] = useState([])
+
+  useEffect(() =>{
+    refreshInvesting()
+    return () => {}
+  },[])
+
+  async function refreshInvesting() {
+    InvestingService.retrieveAllInvesting()
+      .then(
+        response => {
+          setInvestig(response.data)
+        }
+      )
+  }
 
   function remove(record) {
+    InvestingService.deleteInvesting(record.id)
     message.success("Investimento removido!")
   }
 
@@ -21,14 +37,10 @@ function ListInvesting() {
           <div className="logo" />
           <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['2']}>
             <Menu.Item key="1">
-              <Link to="/cadastrar-investimento">
-                Cadastrat Investimento
-              </Link>
+              <Link to="/cadastrar-investimento">Cadastrar Investimento</Link>
             </Menu.Item>
             <Menu.Item key="2">
-              <Link to="/listar-investimento">
-                Listar Investimento
-              </Link>
+              <Link to="/listar-investimentos">Listar Investimento</Link>
             </Menu.Item>
           </Menu>
         </Header>
@@ -37,12 +49,16 @@ function ListInvesting() {
             <h2>
               INVESTIMENTOS
             </h2>
-            <Table /**dataSource={investig}*/>
-              <Column title="Código do ativo" dataIndex="codigoAtivo" key="codigoAtivo"></Column>
-              <Column title="Valor" dataIndex="valor" key="valor"></Column>
-              <Column title="Quantidade de cotas" dataIndex="quantidadeCots" key=""></Column>
-              <Column title="Remover" key="atualzar"
-                render>={(text, record) => (<Button onClick={() => remove}></Button>)}
+            <Table dataSource={investig}>
+              <Column title="Código do ativo" dataIndex="assetCode" key="codigoAtivo"></Column>
+              <Column title="Valor" dataIndex="value" key="value"></Column>
+              <Column title="Quantidade de cotas" dataIndex="amount" key=""></Column>
+              <Column title="Remover" key="atualzar"render={(text, record) => (
+                  <Button onClick={() => remove(record)} type="primary">
+                    Remover
+                  </Button>
+                  )
+                }>
               </Column>
             </Table>
             </div>
