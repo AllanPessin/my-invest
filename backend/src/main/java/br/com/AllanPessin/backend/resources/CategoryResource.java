@@ -3,6 +3,7 @@ package br.com.AllanPessin.backend.resources;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import br.com.AllanPessin.backend.repository.CategoryRepository;
 
 @RestController
 @RequestMapping("/categorias")
+@CrossOrigin(origins = "https://my-invest.vercel.app")
 public class CategoryResource {
 	@Autowired
 	private CategoryRepository categoryRepository; 
@@ -25,7 +27,7 @@ public class CategoryResource {
 		return categoryRepository.save(category);
 	}
 	
-	@DeleteMapping
+	@DeleteMapping("/{id}")
 	public void delete(@PathVariable Long id) {
 		categoryRepository.deleteById(id);
 	}
