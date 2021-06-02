@@ -1,19 +1,19 @@
 import axios from "axios"
 
-const API_URL = "http://localhost:8080"
+const apiUrl = process.env.API_URL
 
 class InvestingService{
 
   retrieveAllInvesting() {
-    return axios.get(`${API_URL}/investimentos`)
+    return axios.get(`${apiUrl}/investimentos`)
   }
 
   saveIvesting(investing) {
-    return axios.post(`${API_URL}/investimentos`, investing)
+    return axios.post(`${apiUrl}/investimentos`, investing)
   }
 
   deleteInvesting(id) {
-    return axios.delete(`${API_URL}/investimentos/${id}`)
+    return axios.delete(`${apiUrl}/investimentos/${id}`)
   }
 }
 

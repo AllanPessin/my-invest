@@ -1,11 +1,11 @@
 import axios from "axios"
 
-const API_URL = "http://localhost:8080"
+const apiUrl = process.env.API_URL
 
 class CategoryService{
 
   retrieveAllCategories() {
-    return axios.get(`${API_URL}/categorias`)
+    return axios.get(`${apiUrl}/categorias`)
   }
 }
 
