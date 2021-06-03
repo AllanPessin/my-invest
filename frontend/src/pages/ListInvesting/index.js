@@ -52,13 +52,15 @@ function ListInvesting() {
             <Table dataSource={investig}>
               <Column title="Código do ativo" dataIndex="assetCode" key="codigoAtivo"></Column>
               <Column title="Valor" dataIndex="value" key="value"></Column>
-              <Column title="Quantidade de cotas" dataIndex="amount" key=""></Column>
-              <Column title="Remover" key="atualzar"render={(text, record) => (
-                  <Button onClick={() => remove(record)} type="primary">
+              <Column title="Quantidade de cotas" dataIndex="amount" key="amount"></Column>
+              <Column title="Data da Compra" dataIndex="buyedAt" key="buyedAt"></Column>
+              <Column title="Remover" key="atualizar"
+                render={(text, record) => (
+                  <Button onClick={() => remove(record)} type="primary" danger>
                     Remover
                   </Button>
-                  )
-                }>
+                )
+              }>
               </Column>
             </Table>
             </div>

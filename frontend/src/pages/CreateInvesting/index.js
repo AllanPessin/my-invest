@@ -139,17 +139,29 @@ function CreateInvesting() {
                 ]}
               >
                 <DatePicker />
-              </Form.Item>
-              <Form.Item label="Categoria" name="category">
-                <Select onChange={handleChange}>
-                  {categories.map((item, index) => {
-                    return (
-                      <Option key={item.id} value={item.id}>
-                        {item.name}
-                      </Option>
-                    );
-                  })}
-                </Select>
+              {/* </Form.Item>
+              <Form.Item label="Categoria" 
+                name="category"
+                rules={[
+                  {
+                    required: false,
+                  }
+                ]}
+              > */}
+                {/* <Select onChange={handleChange}>
+                  {categories.map(categories => (
+                    <Option key={categories.id}>{categories.name}</Option>
+                  ))}
+                </Select> */}
+                {/* <Select onChange={handleChange}> 
+                {categories.map((item, index) => {
+                  return (
+                    <Option key={item.id} value={item.id}>
+                      {item.name}
+                    </Option>
+                  )
+                })}
+                </Select> */}
               </Form.Item>
               <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
