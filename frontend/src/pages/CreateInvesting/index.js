@@ -16,11 +16,11 @@ import InvestingService from "../../services/InvestingService";
 import CategoryService from "../../services/CategoryService";
 
 const { Header, Content, Footer } = Layout;
-const { Option } = Select;
+// const { Option } = Select;
 
 function CreateInvesting() {
 
-  const[categories, setCategories] = useState([])
+  const[, setCategories] = useState([])
   const[, setCategory] = useState(null)
 
   useEffect(() =>{
@@ -62,9 +62,9 @@ function CreateInvesting() {
     console.log("FAILED:", errorInfo)
   }
 
-  function handleChange(value) {
-    setCategory(value)
-  }
+  // function handleChange(value) {
+  //   setCategory(value)
+  // }
 
   return (
     <div className="container">
