@@ -7,7 +7,6 @@ import {
   Menu,
   Input,
   InputNumber,
-  Select
 } from "antd";
 import "antd/dist/antd.css"
 import { useEffect, useState } from "react";
@@ -21,7 +20,7 @@ const { Header, Content, Footer } = Layout;
 function CreateInvesting() {
 
   const[, setCategories] = useState([])
-  const[, setCategory] = useState(null)
+  // const[, setCategory] = useState(null)
 
   useEffect(() =>{
     refreshCategory()
